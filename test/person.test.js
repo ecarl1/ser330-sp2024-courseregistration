@@ -3,7 +3,7 @@ const Person = require('../src/person.js')
 const Institution = require('../src/institution.js')
 
 describe('Person Test Cases', () => {
-  test('Given_NewPerson_When_AllConditionsMet_Then_ReturnsTrue', () => {
+  test('Given_TwoNumbers_When_AdditionOperationIsApplied_ReturnsFour', () => {
     // Given
     // My assumptions
     // Create an institution (of learning)
@@ -17,6 +17,6 @@ describe('Person Test Cases', () => {
 
     // Then
     // Conditions verifying expect(2 + 2).toBe(4);
-    expect(2 + 2).toBe(5)
+    expect(2 + 2).toBe(4)
   })
 })
