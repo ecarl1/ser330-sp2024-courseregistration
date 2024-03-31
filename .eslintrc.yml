@@ -11,6 +11,8 @@ parserOptions:
 plugins:
   - react
   - jest
+environment:
+  - jest
 rules: {
    
 }

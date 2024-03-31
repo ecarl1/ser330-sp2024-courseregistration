@@ -25,13 +25,19 @@ class CourseOffering {
   submit_grade (student, grade) {
     const validGrades = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F']
     if (student instanceof Student && validGrades.includes(grade)) {
+
       this.grades[student.userName] = grade
       const key = this.toString()
       student.transcript[key] = grade
+
+
+
     } else {
       return 'Please enter a valid grade'
     }
   }
+
+
 
   get_grade (student) {
     if (student instanceof Student) {
@@ -48,6 +54,7 @@ class CourseOffering {
       return `${this.course.name}, ${this.course.department} ${this.course.number}-${this.sectionNumber} (${this.quarter} ${this.year})`
     }
   }
+
 }
 
 module.exports = CourseOffering
