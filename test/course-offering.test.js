@@ -1,81 +1,71 @@
-
 const Institution = require('../src/institution.js')
 const Course = require('../src/course.js')
 const CourseOffering = require('../src/course-offering.js')
 const Student = require('../src/student.js')
+const Instructor = require('../src/instructor.js')
 
 describe('Test Group For Course Offering', () => {
 
-    testInstitution = null
-    courseTest = null
-    courseOffering = null
-    seniorStudent = null
+    let testInstitution = null
+    let courseTest = null
+    let courseOffering = null
+    let seniorStudent = null
+    let instructor = null
 
     beforeEach(() => {
         testInstitution = new Institution('Quinnipiac University', 'qu.edu')
         courseTest = new Course('Software Engineering', 'SER330', 'Software Quality Assurance', 3)
         courseOffering = new CourseOffering(courseTest, '12', '2024', '1')
         seniorStudent = new Student('Ryan', 'Dahl', testInstitution, '1/1/2024', 'rdahl')
+        instructor = new Instructor('John', 'Doe', testInstitution, '1/1/1970', 'jdoe')
     })
 
-
-    test('CreatesCourseOffering_WhenAllConditionsMet_ReturnsOject', () => {
-
-        // Assert
-        expect(courseOffering).not.toBeNull
+    test('CreatesCourseOffering_WhenAllConditionsMet_ReturnsObject', () => {
+        expect(courseOffering).not.toBeNull()
     })
-
 
     test('RegisterStudentToCourse_WhenAllConditionsMet_CompletesSuccessfully', () => {
-
-        // Arrange
-        const students = new Array(seniorStudent)
-
-        // Create functions to spy on the affected operations
-        const registerStudentsSpy = jest.spyOn(courseOffering, 'register_students')
-        const registeredStudentsSpy = jest.spyOn(courseOffering.registeredStudents, 'push')
-        const courseListSpy = jest.spyOn(seniorStudent.courseList, 'push')
-
-        // Act
+        const students = [seniorStudent]
         courseOffering.register_students(students)
-
-        // Assert
-        // const registeredStudents = courseOffering.get_students()
-        // expect(registeredStudents.length).toEqual(students.length)
-        expect(registeredStudentsSpy).toHaveBeenCalledTimes(students.length)
-
+        expect(courseOffering.get_students()).toContain(seniorStudent)
     })
 
-    test ('RegisterStudentToCourse_WhenConditionsAreMent_VerifiesCourseAddedToStudentCourseList', () => {
-        // Arrange
-        const students = new Array(seniorStudent)
-
-        // Create functions to spy on the affected operations
-        const registerStudentsSpy = jest.spyOn(courseOffering, 'register_students')
-        const courseListSpy = jest.spyOn(seniorStudent.courseList, 'push')
-
-        // Act
+    test('VerifyStudentIsAddedToCourseList_WhenRegistered', () => {
+        const students = [seniorStudent]
         courseOffering.register_students(students)
-
-        // Assert
-        expect(courseListSpy).toHaveBeenCalledTimes(students.length)
-
-
+        expect(seniorStudent.courseList).toContain(courseOffering)
     })
-    test('RegisterStudentToCourse_WhenStudentsIsNull_ReturnsError', () => {
 
-        // Arrange
-        const students = new Array(seniorStudent)
+    test('RegisterStudentToCourse_WhenStudentsIsNull_ThrowsError', () => {
+        expect(() => {
+            courseOffering.register_students(null)
+        }).toThrow()
+    })
 
-        // Create functions to spy on the affected operations
-        const registerStudentsSpy = jest.spyOn(courseOffering, 'register_students')
-        const registeredStudentsSpy = jest.spyOn(courseOffering.registeredStudents, 'push')
-        const courseListSpy = jest.spyOn(seniorStudent.courseList, 'push')
+    test('SubmitGradeForStudent_WhenValidGrade_CompletesSuccessfully', () => {
+        const students = [seniorStudent]
+        courseOffering.register_students(students)
+        courseOffering.submit_grade(seniorStudent, 'A')
+        expect(courseOffering.get_grade(seniorStudent)).toBe('A')
+    })
 
-        // Act
-        //courseOffering.register_students(null)
+    test('SubmitGradeForStudent_WhenInvalidGrade_ReturnsError', () => {
+        const students = [seniorStudent]
+        courseOffering.register_students(students)
+        expect(() => {
+            courseOffering.submit_grade(seniorStudent, 'Z')
+        }).toThrow()
+    })
 
-        // Assert
-        // Expect that an error is thrown
+    test('AssignInstructorToCourse_WhenInstructorIsValid_AssignmentIsSuccessful', () => {
+        courseOffering.instructor = instructor
+        expect(courseOffering.instructor).toBe(instructor)
+    })
+
+    test('InstructorDetailsAreCorrect_WhenAssignedToCourse', () => {
+        courseOffering.instructor = instructor
+        const courseDescription = courseOffering.toString()
+        expect(courseDescription).toContain(instructor.firstName)
+        expect(courseDescription).toContain(instructor.lastName)
     })
 })
