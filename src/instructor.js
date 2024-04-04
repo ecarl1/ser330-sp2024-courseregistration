@@ -1,10 +1,11 @@
 const Person = require('./person.js')
 
 class Instructor extends Person {
-  constructor (lastName, firstName, school, dateOfBirth, username) {
-    super(lastName, firstName, school, dateOfBirth, username, 'instructor')
-    // key = this.course.name
-    this.course_list = []
+  constructor(firstName, lastName, department, yearsOfExperience) {
+    super(firstName, lastName);
+    this.department = department;
+    this.yearsOfExperience = yearsOfExperience;
+    this.courseList = []; // Initialize courseList as an array
   }
 
   list_courses (year = null, quarter = null) {
@@ -26,11 +27,9 @@ class Instructor extends Person {
     }
   }
 
-  toString () {
-    return ('\n' + 'Instructor Name: ' + this.firstName + ' ' + this.lastName + '\n' +
-            'School: ' + this.school.name + '\n' +
-            'DOB: ' + this.dateOfBirth.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + '\n' +
-            'Username: ' + this.userName + '\n')
+  toString() {
+    // Adjust to handle potentially undefined this.school
+    return `\nInstructor Name: ${this.firstName} ${this.lastName}\nSchool: ${this.school ? this.school.name : 'N/A'}\nDOB: ${this.dateOfBirth ? this.dateOfBirth.toLocaleDateString('en-US') : 'N/A'}\nUsername: ${this.userName || 'N/A'}\n`;
   }
 }
 

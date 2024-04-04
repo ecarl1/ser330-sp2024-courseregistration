@@ -50,12 +50,13 @@ describe('Test Group For Course Offering', () => {
     })
 
     test('SubmitGradeForStudent_WhenInvalidGrade_ReturnsError', () => {
-        const students = [seniorStudent]
-        courseOffering.register_students(students)
-        expect(() => {
-            courseOffering.submit_grade(seniorStudent, 'Z')
-        }).toThrow()
-    })
+        const students = [seniorStudent];
+        courseOffering.register_students(students);
+        expect(() => courseOffering.submit_grade(seniorStudent, 'Z')).toThrow('Invalid grade or student not registered');
+    });
+
+    
+    
 
     test('AssignInstructorToCourse_WhenInstructorIsValid_AssignmentIsSuccessful', () => {
         courseOffering.instructor = instructor

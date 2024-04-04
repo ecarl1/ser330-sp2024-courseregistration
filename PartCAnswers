@@ -1,0 +1,14 @@
+1. **What is the significance of automating unit testing?**
+Automating unit testing is crucial because it ensures that small, isolated parts of the application work as expected. This automation facilitates early detection of errors, improves code quality, and speeds up the development process, as tests can be run quickly and frequently without manual intervention.
+
+2. **What type of testing is automated unit testing?**
+Automated unit testing is a type of white-box testing where individual units or components of a software are tested automatically. It's focused on the internal workings of an application as opposed to its functionality or end-user experience.
+
+3. **How challenging was it to achieve the 80% code coverage benchmark?**
+Achieving the 80% code coverage benchmark was moderately challenging. It required a strategic approach to identify and test significant portions of the codebase, ensuring that various scenarios and edge cases were covered, while also recognizing that not all code needs to be tested if it does not significantly impact functionality.
+
+4. **What was your approach to writing automated unit tests?**
+My approach to writing automated unit tests involved following the Given-When-Then pattern to ensure clarity and structure. I focused on creating tests that were meaningful and reflective of how the software would be used, prioritizing critical functionalities and logical branches to maximize coverage and effectiveness.
+
+5. **Do you think automated unit testing is worth it?**
+Absolutely, I believe automated unit testing is worth the investment. It enhances code reliability, facilitates maintenance, allows for safer refactoring, and boosts confidence during development. Despite the initial time and effort required to write tests, the long-term benefits in terms of code quality and reduced debugging time are substantial.

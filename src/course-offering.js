@@ -22,20 +22,17 @@ class CourseOffering {
     return this.registeredStudents
   }
 
-  submit_grade (student, grade) {
-    const validGrades = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F']
+  submit_grade(student, grade) {
+    const validGrades = ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'];
     if (student instanceof Student && validGrades.includes(grade)) {
-
-      this.grades[student.userName] = grade
-      const key = this.toString()
-      student.transcript[key] = grade
-
-
-
+      this.grades[student.userName] = grade;
+      const key = this.toString();
+      student.transcript[key] = grade;
     } else {
-      return 'Please enter a valid grade'
+      throw new Error('Invalid grade or student not registered');
     }
   }
+  
 
 
 

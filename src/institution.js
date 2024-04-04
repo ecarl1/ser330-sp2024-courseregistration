@@ -130,12 +130,27 @@ class Institution {
     for (const offering of this.courseSchedule[courseName]) {
       if (dept === offering.course.department && number === offering.course.number && year === offering.year && quarter === offering.quarter && sectionNumber === offering.sectionNumber) {
         console.log(`Registered Students List (${offering})\n------------------------------------------------------------`)
-        for (const student of offering.registered_students) {
+        for (const student of offering.registeredStudents) { // Corrected to registeredStudents
           console.log(`${student.lastName}, ${student.firstName}`)
         }
       }
     }
   }
+  
+
+  remove_student(student) {
+    if (student instanceof Student) {
+      if (this.studentList.hasOwnProperty(student.userName)) {
+        delete this.studentList[student.userName];
+        console.log(`${student.firstName} ${student.lastName} has been removed from the institution.`);
+      } else {
+        console.log(`${student.firstName} ${student.lastName} is not enrolled in the institution.`);
+      }
+    } else {
+      throw new TypeError('Only accepts student object');
+    }
+  }
+  
 
   add_course (course) {
     if (course instanceof Course) {
@@ -162,5 +177,7 @@ class Institution {
     }
   }
 }
+
+
 
 module.exports = Institution

@@ -1,33 +1,19 @@
-
 class LoanManager {
   canGetLoan (income, criminalRecord, hasRequiredDocs, hasLoan) {
-
-    const hasCriminalRecord = customer.criminalRecord
-    var hasRequiredDocs = customer.hasRequiredDocs()
-    var hasLoan = customer.hasLoan()
-
-    if (customer.income >= 30000) {
+    if (income >= 30000) {
       if (hasLoan) {
-        return true
+        return true;
       } else {
-        if (hasRequiredDocs) {
-          return true
-        } else {
-          return false
-        }
+        return hasRequiredDocs;
       }
     } else {
-      if (hasCriminalRecord) {
-        return false
+      if (criminalRecord) {
+        return false;
       } else {
-        if (hasRequiredDocs) {
-          return true
-        } else {
-          return false
-        }
+        return hasRequiredDocs;
       }
     }
   }
 }
 
-module.exports = LoanManager
+module.exports = LoanManager;
