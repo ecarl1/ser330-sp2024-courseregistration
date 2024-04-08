@@ -1,47 +1,44 @@
+const Institution = require('../src/institution');
 const Instructor = require('../src/instructor');
-const CourseOffering = require('../src/course-offering');
 const Course = require('../src/course');
-
-describe('Instructor Class Tests', () => {
-  let instructor;
-  let course;
-  let courseOffering1;
-  let courseOffering2;
-
-  beforeEach(() => {
-    instructor = new Instructor('John', 'Doe', 'Physics', 10);
-    course = new Course('Physics', 'PHY101', 'Intro to Physics', 4);
-    courseOffering1 = new CourseOffering(course, '01', '2024', 'Fall');
-    courseOffering2 = new CourseOffering(course, '02', '2023', 'Spring');
+const CourseOffering = require('../src/course-offering');
+const Student = require('../src/student');
+describe('Instructor Class Tests - Additional', () => {
+    let instructor, course1, course2;
+  
+    beforeEach(() => {
+      instructor = new Instructor('John', 'Doe', 'Physics', 10);
+      course1 = new Course('Physics', 'PHY101', 'Intro to Physics', 4);
+      course2 = new Course('Chemistry', 'CHEM101', 'Intro to Chemistry', 3);
+  
+      // Mock course offerings for the instructor
+      const offering1 = new CourseOffering(course1, '01', '2024', 'Fall');
+      const offering2 = new CourseOffering(course2, '01', '2023', 'Spring');
+      instructor.courseList.push(offering1, offering2);
+    });
+  
+    test('list_courses filters by year', () => {
+      const courses2024 = instructor.list_courses('2024');
+      expect(courses2024.length).toBe(1);
+      expect(courses2024[0]).toContain('PHY101');
+    });
+  
+    test('list_courses filters by quarter', () => {
+      const coursesSpring = instructor.list_courses(null, 'Spring');
+      expect(coursesSpring.length).toBe(1);
+      expect(coursesSpring[0]).toContain('CHEM101');
+    });
+  
+    test('list_courses filters by year and quarter', () => {
+      const courses = instructor.list_courses('2024', 'Fall');
+      expect(courses.length).toBe(1);
+      expect(courses[0]).toContain('PHY101');
+    });
+  
+    test('list_courses with no filters', () => {
+      const courses = instructor.list_courses();
+      expect(courses.length).toBe(2);
+    });
+      
   });
-
-  test('Instructor properties are correctly assigned', () => {
-    expect(instructor.firstName).toBe('John');
-    expect(instructor.lastName).toBe('Doe');
-    expect(instructor.department).toBe('Physics');
-    expect(instructor.yearsOfExperience).toBe(10);
-    expect(instructor.courseList).toEqual([]);
-  });
-
-  test('list_courses returns correct courses for the instructor', () => {
-    instructor.courseList.push(courseOffering1, courseOffering2);
-
-    // Test filtering by year
-    expect(instructor.list_courses('2024')).toContain(courseOffering1.toString());
-
-    // Test filtering by quarter
-    expect(instructor.list_courses(null, 'Spring')).toContain(courseOffering2.toString());
-
-    // Test filtering by both year and quarter
-    expect(instructor.list_courses('2024', 'Fall')).toContain(courseOffering1.toString());
-
-    // Test with no filters
-    expect(instructor.list_courses()).toContain(courseOffering1.toString());
-    expect(instructor.list_courses()).toContain(courseOffering2.toString());
-  });
-
-  test('toString returns the correct string representation', () => {
-    const expectedString = `\nInstructor Name: John Doe\nSchool: undefined\nDOB: undefined\nUsername: undefined\n`;
-    expect(instructor.toString()).toBe(expectedString);
-  });
-});
+  

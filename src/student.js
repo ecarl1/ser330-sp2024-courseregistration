@@ -25,46 +25,50 @@ class Student extends Person {
     return total
   }
 
-  get gpa () {
-    let earned = 0
-    let available = 0
-
+  get gpa() {
+    let earned = 0;
+    let available = 0;
+  
     const gradeScale = {
       'A+': 4.0,
-      A: 4.0,
+      'A': 4.0,
       'A-': 3.67,
       'B+': 3.33,
-      B: 3.0,
+      'B': 3.0,
       'B-': 2.67,
       'C+': 2.33,
-      C: 2.0,
+      'C': 2.0,
       'C-': 1.67,
       'D+': 1.33,
-      D: 1.0,
+      'D': 1.0,
       'D-': 0.67,
-      F: 0
-    }
-
-    for (const x of this.courseList) {
-      if (this.username in x.grades) { // check to see if a grade has already been submitted
-        earned += (gradeScale[x.get_grade(this)] * x.course.credits)
-        available += x.course.credits
+      'F': 0,
+    };
+  
+    for (const offering of this.courseList) {
+      const grade = offering.get_grade(this);
+      if (grade) {
+        earned += (gradeScale[grade] * offering.course.credits);
+        available += offering.course.credits;
       }
     }
-
-    const GPA = available === 0 ? 0 : earned / available
-    return GPA
+  
+    return available === 0 ? 0 : earned / available;
   }
+  
 
-  toString () {
-    return ('\n' + 'Student Name: ' + this.firstName + ' ' + this.lastName + '\n' +
-            'School: ' + this.school.name + '\n' +
-            'DOB: ' + this.dateOfBirth.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + '\n' +
-            'Username: ' + this.userName + '\n' +
-            'Email: ' + this.email + '\n' +
-            'GPA: ' + this.gpa + '\n' +
-            'Credits: ' + this.credits + '\n')
+  toString() {
+    return (
+      `\nStudent Name: ${this.firstName} ${this.lastName}\n` +
+      `School: ${this.school.name}\n` +
+      `DOB: ${this.dateOfBirth.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}\n` +
+      `Username: ${this.username}\n` + // Make sure username is correctly set in the constructor
+      `Email: ${this.email}\n` + // Ensure email is set and accessible
+      `GPA: ${this.gpa.toFixed(2)}\n` +
+      `Credits: ${this.credits}\n`
+    );
   }
+  
 }
 
 module.exports = Student
